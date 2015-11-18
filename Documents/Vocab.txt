@@ -1,0 +1,21 @@
+card:
+suit: 花色
+club： 草花
+heart：红桃
+diamond：方块
+spade：黑桃
+
+rank: 数字
+red joker: 大王
+black joker：小王
+
+tractor:
+trump: 主
+trump rank
+trump suit
+declarer：庄家
+opponent：玩家
+trick：轮
+deals：摸牌
+make trump：亮主
+play：打牌

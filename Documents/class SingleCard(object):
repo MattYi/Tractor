@@ -1,0 +1,34 @@
+class SingleCard(object):
+	Constructor:
+		SingleCard(self, cd)	
+			# class Card ->
+
+class Tract(object):
+	Constructor:
+		Tract(self, cd, length)
+			# class Card, int ->
+			# cd is the smallest card in the tract
+			# length is the number of different cards in the tract
+			# e.g, for tract Heart(2, 2, 3, 3), cd = Heart2, length = 2
+
+class CardSet(object):
+	Constructor:
+		CardSet(self, cdList)
+			# cdList is a List consisting of the cards that the player has played
+
+	Method:
+		def isDrop(self)
+			# -> bool
+			# return 1 if the cardset is drops
+
+		def isTrump(self)
+			# -> bool
+			# return 1 if all the cards in the cardset are trumps
+
+		operator > :
+			# 
+
+		operator < :
+			#
+
+		operator == :

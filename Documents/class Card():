@@ -1,0 +1,50 @@
+class Card():
+Constructor:
+	Card(self, int cid)					
+		# cid is the id of the card, it ranges from 0 to 53, with suit in the sequence Spade, Heart, Club, Diamond, and for each suit the rank follows the sequence 2 to A. 
+		# 52 and 53 refer to black joker and red joker.
+
+Method:
+	def getID(self):
+		# -> int
+		# return the ID of the card, ranging from 0 to 53
+
+	def getRank(self):	
+		# -> string				
+		# return the rank of the card
+		# ranks are in the list: ['2','3','4','5','6','7','8','9','10','J','Q','K','A']
+
+	def isTrump(self, tSuit, tRank):	
+		# string, string -> bool
+		# tSuit and tRank is the suit and rank of trump in current game
+		# tSuit should be selected from ["spade", "heart", "club", "diamond", "None"]
+		# tRank should be selected from  ['2','3','4','5','6','7','8','9','10','J','Q','K','A']
+		# tSuit == "None" means there is no trump suit in current game, therefore only eight trump rank and four jokers are trump
+		# return 1 if the card is a trump otherwise 0
+
+
+	def getSuit(self):	
+		# -> string
+		# tSuit and tRank is the suit and rank of trump in current game
+		# return value would be selected from ["spade", "heart", "club", "diamond", "Trump"]
+
+	def getPnt(self):
+		# 
+		# this function is used for comparing two cards
+
+	def isNext(self, cd):
+		# class Card -> bool
+		# return 1 if cd is EXACTLY the next card of current card
+		# e.g Trump is Heart,5
+		# Heart,4.isNext(Heart,5) == 0
+		# Heart,4.isNext(Heart,6) == 1
+		# Club,4.isNext(Heart,4) == 1
+		# Heart,4.isNext(BlackJoker) = 1
+		# BlackJoker.isNext(RedJoker) = 1
+
+	def getScore(self):
+		# -> int
+		# 5 returns 5
+		# 10, K return 10
+
+

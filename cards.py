@@ -14,3 +14,4 @@ class Card(object):
             self.rank = rList[r]
         
         
+#test folk

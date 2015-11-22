@@ -23,6 +23,7 @@ class rule(object):
         return self.trumpSuit
     
     '''
+    card->bool
     return 1 if the card is trump
     return 0 if not
     '''   
@@ -33,6 +34,11 @@ class rule(object):
             return 1
         return 0
     
+    '''
+    card -> int
+    return the score of the card
+    return 0, 5, 10 for different cards
+    '''
     def getCardScore(self, cd):
         r = cd.getRank()
         if r == '5':
@@ -41,6 +47,11 @@ class rule(object):
             return 10
         return 0
     
+    '''
+    card -> int
+    this is an auxiliary method 
+    to sort the cards, find the next one and compare two cards
+    '''
     def getCardPnt(self, cd):
         r = cd.getRank()
         s = cd.getSuit()
@@ -83,11 +94,38 @@ class rule(object):
                         return 114
                     print 'No such rank!'
                     sys.exit()     
-        
+    
+    '''
+    cd, cd -> int
+    compare two cards
+    the former one is larger return 1
+    the latter one is larger return -1
+    same card: return 0
+    '''
+    def compareCards(self, cd1, cd2):
+        pnt1 = self.getCardPnt(cd1)
+        pnt2 = self.getCardPnt(cd2)
+        if pnt1 > pnt2:
+            return 1
+        if pnt1 == pnt2:
+            return 0
+        return -1
+    '''
+    list(card) -> void
+    an auxiliary method to reaarange cards in a list
+    according to: self.getCardPnt(cd)
+    if same, according to there suit(or id)
+    '''
+      
     def rearrange(self, cdList):
         cdList.sort(key=lambda cd: cd.id)
         cdList.sort(key=lambda cd: self.getCardPnt(cd))
         return cdList
+    
+    '''
+    list(card) -> bool
+    return 1 if the card list is dropped
+    '''
         
     def isDrop(self, cdList):
         s = cdList[0].getSuit()
@@ -102,7 +140,10 @@ class rule(object):
                 return True
         return False
                         
-                    
+    '''
+    construct an instance of class cardSet
+    '''
+                   
     def getCardSet(self, cdList):   
         if self.isDrop(cdList):
             return []
@@ -141,10 +182,34 @@ class rule(object):
         tr.sort(key=lambda t:self.getCardPnt(t.getCard()))
         tr.sort(key=lambda t:t.getLength())
         return cardSet.cardSet(singleCard, tr)
+    
+    '''
+    cardSet, cardSet -> bool
+    the former one should be played first
+    return 1 if former one is larger
+    return 1 otherwise
+    not tested yet
+    '''
        
-    def compareCardSet(self, cs1, cs2):   
-        if cs1.getType() == cs2.getType():
-            pass
+    def compareCardSet(self, cs1, cs2): 
+        if cs2.isDrop():  
+            return 1
+        if not cs1.getType() == cs2.getType():
+            return 1
+        sc1 = cs1.getSingleCardList()
+        sc2 = cs2.getSingleCardList()
+        scLen = len(sc1)
+        for i in xrange(scLen):
+            if self.compareCards(sc1[i], sc2[i]) >= 0:
+                return 1
+        t1 = cs1.getTractList()
+        t2 = cs2.getTractList()
+        tLen = len(t1)
+        for i in xrange(tLen):
+            if self.compareCards(t1[i][0],t2[i][0]) >= 0:
+                return 1
+        return -1
+                
                     
                     
                     

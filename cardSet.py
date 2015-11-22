@@ -57,6 +57,13 @@ class cardSet():
         self.singleCardList = scList
         self.tractList = tList
     
+    def getSingleCardList(self):
+        return self.singleCardList
+    
+    def getTractList(self):
+        return self.tractList
+    
+    
     '''
     -> bool
     return 1 if the cardset is a combol (combination of singlecard(s) and(or) tract(s)

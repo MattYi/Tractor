@@ -4,7 +4,6 @@
 '''
 from __builtin__ import False
 
-#test fork
 # This file defines the class of card
 
 class card(object):

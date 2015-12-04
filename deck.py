@@ -34,7 +34,7 @@ class Deck(object):
         No return value
         """
         #TODO: don't really need this function? It's essentially the same as __init__()
-        num = np.hstack((np.arange(0,53),np.arange(0,53)))#a 1 by 108 matrix
+        num = np.hstack((np.arange(0,54),np.arange(0,54)))#a 1 by 108 matrix
         np.random.shuffle(num)
         self.cards = []
         for i in len(num):
@@ -62,7 +62,7 @@ class Deck(object):
             i = 0
             for item in get:
                 if item in self.cards:
-                    self.cards( self.cards.index(item) ) = put(i)
+                    self.cards[ self.cards.index(item) ] = put(i)
                     i = i+1
                 else:
                     print "Error! Tried to get a card that is not in \"bottom cards\"!"

@@ -8,8 +8,8 @@ from __builtin__ import False
 
 class Card(object):
     def __init__(self,cid):        
-        #the id of card ranges from 0 to 53
-        #the method to convert from id to Card see self.getCard()
+        #id of card ranges from 0 to 53
+        #For method to convert from id to Card see self.getCard()
         if cid>=0 and cid<=53:
             self.id = cid   
         else:

@@ -6,7 +6,7 @@ from __builtin__ import False
 
 # This file defines the class of card
 
-class card(object):
+class Card(object):
     def __init__(self,cid):        
         #the id of card ranges from 0 to 53
         #the method to convert from id to Card see self.getCard()

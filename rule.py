@@ -5,7 +5,7 @@ This class keeps the rules of tractor
 import sys
 import cardSet
 
-class rule(object):
+class Rule(object):
     def __init__(self):
         self.trumpRank = 'NA'
         self.trumpSuit = 'NA'
@@ -210,9 +210,14 @@ class rule(object):
                 return 1
         return -1
                 
+    '''
+    what players can do or not are defined here
+    '''
+    
+    def canSetTrumpSuit(self, p):
+        pass                
                     
-                    
-                    
+    def                
             
             
             

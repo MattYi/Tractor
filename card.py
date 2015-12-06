@@ -2,7 +2,7 @@
 @author: MattYi, University of Washington
 @date: 11/17/2015
 '''
-from __builtin__ import False
+#from __builtin__ import False
 
 # This file defines the class of card
 
@@ -14,6 +14,13 @@ class Card(object):
             self.id = cid   
         else:
             raise "wrong card id!"
+    def __eq__(self,other):
+        """
+        DESCRIPTION:
+            used to compare to different card objects
+        """
+        return self.id == other.getID()
+
     
     # tested       
     def getSuit(self):

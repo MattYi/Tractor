@@ -15,6 +15,9 @@ class Card(object):
         else:
             raise "wrong card id!"
     
+    def __eq__(self, cd2):
+        return self.getID() == cd2.getID()
+    
     # tested       
     def getSuit(self):
         if self.getID() == 52:

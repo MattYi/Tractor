@@ -68,4 +68,17 @@ for i in xrange(300):
         #print str(cs) + ' ' + 'isTract'
 '''
 
+'''
+test to dict
+'''
+'''
+a = 1
+b = 3
+d = 6
 
+sgl = [cardSet.singleCard(card.Card(a))]
+tl = [cardSet.tract(card.Card(b),2), cardSet.tract(card.Card(d),3)]
+cs = cardSet.cardSet(sgl, tl)
+dic = cs.toDict()
+print dic
+'''

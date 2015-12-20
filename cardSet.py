@@ -44,6 +44,15 @@ class tract(object):
     def getLength(self):
         return self.length
         
+    def getCardList(self):
+        cdList = []
+        cd = self.getCard()
+        cid = cd.getID()
+        for i in xrange(self.getLength()):
+            cdList.append(Card(cid+i))
+            cdList.append(Card(cid+i))
+        return cdList
+    
     def __str__(self):
         return self.card.__str__() + ' ' + str(self.length)
 
@@ -122,7 +131,31 @@ class cardSet():
             tmp2 = ' '.join(tmp)
             return tmp1 + ' ' + tmp2
         
-            
+    '''
+    12.4 It seems a dictionary is very good in handling cardset
+    So I created function toDict() and fromDict() to transmit from and to Dict
+    '''        
+    # well tested
+    def toDict(self):
+        d = dict();
+        d[0] = [];
+        for item in self.getSingleCardList():
+            d[0].append(item)
+        for item in self.getTractList():
+            leng = item.getLength()
+            if leng not in d.keys():
+                d[leng] = [item]
+            else:
+                d[leng].append(item)
+        return d
+    
+    
+    def maxTractLen(self):
+        if self.getTractList().empty():
+            return 0
+        else:
+            return self.getTractList()[-1].getLength()
+        
     
         
         

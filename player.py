@@ -6,13 +6,18 @@ from card import *
 
 class Player(object):
     def __init__(self, pid = -1, n = "NoName"):
-    # id: from 0 to 3, since currently we only consider the situation that there are 4 players
-        self.id = pid
-        self.name = n
-    # hand: it is a list of card object that this player is holding
-    # I don't know whether it is better to store the id or the object of card in the list
-        self.hand = []
+        #to do: it seems good to implement the player as a node of a linked list
+        #therefore please add self.next in constructor where the next points at the next player
+        #it does not need to be initialized here in the constructor
+        #correspondingly, a function setNext() and getNext() are needed
+        pass
     
+    def setNext(self):
+        pass
+    
+    def getNext(self):
+        pass
+        
     def setName(self, n):
         self.name = n
         
@@ -41,6 +46,11 @@ class Player(object):
     # return the card
     # don't know yet the variable cd is the id of the card or the object
     # currently consider it as the object
+    
+    def pickCards(self):
+    #TODO: returns the card that the player wants to play
+        pass
+    
     def playCards(self, cds):
         for cd in cds:
             if cd not in self.hand:

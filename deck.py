@@ -31,7 +31,7 @@ class Deck(object):
         for item in num:
             self.cards.append(Card(item)) 
 
-        self.bottom = self.cards[0:8] #first 8 elements in the list are 8 "bottom cards" kept in deck 
+        self.__bottom = self.cards[0:8] #first 8 elements in the list are 8 "bottom cards" kept in deck 
         self.top = self.cards[8:] #self.cards only has 100 cards which will be drawn
     
     def shuffle(self):
@@ -61,8 +61,8 @@ class Deck(object):
     def changeBottom(self, get, put, debug = 0):
         """
         change 8 "bottom cards"
-        -get is a list of cards somebody want from the "bottom cards"
-        -put is a list of cards somebody put back to "bottom cards"
+        -get is a list of cards requested from the "bottom cards"
+        -put is a list of cards put back to the "bottom cards"
         -length of get must be equal to length of put
         -will return False if fail. Otherwise it will return True
         """
@@ -72,17 +72,14 @@ class Deck(object):
         if len(get) != len(put):
             print "Error! Number of Cards get from \"bottom cards\" is not the same as those of cards put back"
             return False
+        elif len(get) > 8 or len(get) < 0:
+            print "Error! Number of Cards requested from \"bottom cards\" is not in the range of 0 to 8"
+            return False
         else:#delete all items of get in self.bottom and append put to it
             for item in get:
-<<<<<<< HEAD
-                if item in self.cards:
-                    self.cards[ self.cards.index(item) ] = put(i)
-                    i = i+1
-=======
                 if item not in self.bottom:
                     print "Try to get a card, ", item, " which is not in the \"bottom cards\"." 
                     return False
->>>>>>> d32a8c394480c611754717a841c039d7f3fa15db
                 else:
                     self.bottom.remove(item)
             self.bottom = self.bottom + put
@@ -129,7 +126,7 @@ class Deck(object):
 
     #tested
     def getBottom(self):
-        return self.bottom
+        return self.__bottom
 
     #tested
     def getTop(self):

@@ -81,11 +81,16 @@ class Player(object):
     
     def declareTrump(self,cardOnDesk):
         """
-        Currently, this function will be called in Game object each time a player draw a card.
-        If this player want to declare trump, it return the a card object and delcare suit of of it to be trump 
-        Otherwise it will return False
-        -cardOnDesk is a list. E.g. if this player is the last to play cards in this round, 
+        DESCRIPTION:
+            Currently, this function will be called in Game object each time a player draw a card.
+            If this player want to declare trump, it return the a card object and delcare suit of of it to be trump 
+            Otherwise it will return False
+        ARGUMENTS:
+            -cardOnDesk is a list. E.g. if this player is the last to play cards in this round,
             cardOnDesk = [[cards played by p1 this round],[cards played by p2 this round],[cards played by p3 this round]]
+        RETURN:
+            If want to declare trump, return a list of card object shown to Game and Game will check if they are valid
+            If do not want to declare trump, return False
         """
         #cds should be a list of one card or two cards (declare after someone has already done this)
         cds = self.brain.declareTrump(self.hand,cardOnDesk)
@@ -100,6 +105,7 @@ class Player(object):
                     print "Player, "+self.name+", tried to play a card not in his hand: "+str(cd)
                     raise TypeError("Try to return a object which is not a Card object")
 
+            print "In player.declareTrump():"
             print "Player, "+self.name+" declared Trump using: "
             for cd in cds:
                 print cd
@@ -143,10 +149,13 @@ class Player(object):
     
     def replaceBottom(self, bottom):       
         """
-        Game will call this function to ask this player if it want to change the bottom cards
-        The player will return a list of 8 cards that will be put into the bottom
-        If anything went wrong in this function, it will return False
-        -bottom is a copy of list of cards that are the same as current bottom cards
+        DESCRIPTION:
+            Game will call this function to ask this player if it want to change the bottom cards
+        ARGUMENTS:
+            -bottom is a copy of list of cards that are the same as current bottom cards
+        RETURN:
+            The player will return a list of 8 cards that will be put into the bottom
+            If anything went wrong in this function, it will return False
         """
         #put is a list of cards to be put into the bottom
         #get is a list of cards that the player want from the bottom

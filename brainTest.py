@@ -9,22 +9,22 @@ class BrainTest(Brain):
 
     def declareTrump(self,hand,cardOnDesk):
         """
-        Description:
+        DESCRIPTION:
             If want to declare trump, it should return a list of cards used to declare. Otherwise, return False
 
-        Arguments:
+        ARGUMENTS:
             -hand is a list of card objects
             -cardOnDesk is a list. E.g. if this player is the last to play cards in this round, 
                 cardOnDesk = [[cards played by p1 this round],[cards played by p2 this round],[cards played by p3 this round]]
 
-        Return:
+        RETURN:
             If want to declare trump, return a list of card object shown to Game and Game will check if they are valid
             If do not want to declare trump, return False
         """
         #test declare trump with one card
         print "declareTrump() in BrainTest was called."
         c1=[hand[0],hand[1]]
-        print "Will return These cards from declareTrump():"
+        print "Will return These cards from brainTest.declareTrump():"
         for item in c1:
             print item 
         return c1
@@ -36,12 +36,12 @@ class BrainTest(Brain):
 
     def declareToPlayCards(self,hand,cardOnDesk):
         """
-        Description:
-        Arguments:
+        DESCRIPTION:
+        ARGUMENTS:
             -hand is a list of card objects
             -cardOnDesk is a list. E.g. if this player is the last to play cards in this round, 
                 cardOnDesk = [[cards played by p1 this round],[cards played by p2 this round],[cards played by p3 this round]]
-        Return:
+        RETURN:
             Should return a list of card objects
         """
         toPlay = hand[0:4]
@@ -49,12 +49,12 @@ class BrainTest(Brain):
 
     def changeBottom(self,hand,bottom):
         """
-        Description:
+        DESCRIPTION:
             The player will return a list of 8 cards that will be put into the bottom
-        Arguments:
+        ARGUMENTS:
             -bottom is a copy of list of cards that are the same as current bottom cards
             -hand is hand card of this player
-        Return:
+        RETURN:
             This function will return [put,get]
             -put is a list of cards to be put into the bottom
             -get is a list of cards that the player want from the bottom

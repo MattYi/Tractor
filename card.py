@@ -11,7 +11,7 @@ class Card(object):
         #id of card ranges from 0 to 53
         #For method to convert from id to Card see self.getCard()
         if cid>=0 and cid<=53:
-            self.id = cid   
+            self.__id = cid   
         else:
             raise "wrong card id!"
     def __eq__(self,other):
@@ -19,11 +19,7 @@ class Card(object):
         DESCRIPTION:
             used to compare to different card objects
         """
-        return self.id == other.getID()
-
-    
-    def __eq__(self, cd2):
-        return self.getID() == cd2.getID()
+        return self.__id == other.getID()
     
     # tested       
     def getSuit(self):
@@ -44,7 +40,7 @@ class Card(object):
     
     # tested               
     def getID(self):
-        return self.id
+        return self.__id
     
     def __str__(self):
         return self.getSuit() + ' ' + self.getRank()

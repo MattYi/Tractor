@@ -1,10 +1,11 @@
 from player import Player
 from deck import Deck
 from card import Card
-from brainTest import BrainTest
+from brainDOS import BrainDOS
 
 
-b1 = BrainTest()
+print "Test basic player"
+b1 = BrainDOS()
 p1 = Player(b1)
 print "Info of p1:"
 print p1
@@ -20,32 +21,38 @@ else:
     print "No!"
 print "Hands of p1 at the beginning"
 p1.displayHands()
-cd1 = d1.popCard()
-p1.drawCard(cd1)
-cd1 = d1.popCard()
-p1.drawCard(cd1)
-cd1 = d1.popCard()
-p1.drawCard(cd1)
-cd1 = d1.popCard()
-p1.drawCard(cd1)
+#cd1 = d1.popCard()
+#p1.drawCard(cd1)
+#cd1 = d1.popCard()
+#p1.drawCard(cd1)
+#cd1 = d1.popCard()
+#p1.drawCard(cd1)
+#cd1 = d1.popCard()
+#p1.drawCard(cd1)
+p1.drawCard(Card(0))
+p1.drawCard(Card(13))
+p1.drawCard(Card(26))
+p1.drawCard(Card(39))
 print "Hands of p1 after drawing for 4 times"
 p1.displayHands()
 print "\n\n"
 
 ################################################################################
 #test declareTrump()
+print "Test declareTrump()"
 cdOnDesk = [[],[],[]]
 declareCards = p1.declareTrump(cdOnDesk)
 if declareCards == False:#not declared
     print str(p1) + " does not want to declare trump."
 else:#delcare trump
-    print str(p1) + " want to declare trump using these cards:"
+    print str(p1) + " wants to declare trump using these cards:"
     for item in declareCards:
         print item
 print "\n\n"
 
 ################################################################################
 #test replaceBottom()
+print "Test replaceBottom()"
 print "Old bottom:"
 for item in d1.getBottom():
     print item
@@ -61,9 +68,9 @@ for item in d1.getBottom():
 print "\n\n"
 
 
-
 ################################################################################
 #test declareToPlayCards()
+print "Test declareToPlayCards()"
 cardToBePlayed1 = p1.declareToPlayCards(cdOnDesk)
 print str(p1) + " tried to play: "
 for item in cardToBePlayed1:

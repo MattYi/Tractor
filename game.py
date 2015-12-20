@@ -17,9 +17,9 @@ class game(object):
     '''
     def __init__(self):
         self.pe = player.Player()   #east player
-        self.pn = player.Player()
-        self.pw = player.Player()
-        self.ws = player.Player()
+        self.pn = player.Player()   #north player
+        self.pw = player.Player()   #west player
+        self.ps = player.Player()   #south player
         self.pe.setNext(self.pn)
         self.pn.setNext(self.pw)
         self.pw.setNext(self.ps)
@@ -27,7 +27,6 @@ class game(object):
         
         self.deck = deck.Deck()
         self.rule = rule.Rule()
-        self.inter = interface.Interface()
         self.trumpRank = '2'
         self.trumpSuit = 'NA'
         self.currScore = 0
@@ -62,7 +61,7 @@ class game(object):
     '''
             
     def deal(self):
-       pass
+        pass
             
             
 
@@ -70,25 +69,25 @@ class game(object):
         # initiation
         lastWn = self.declarer
         tmpScore = 0
-
+        self.rule.setTrumpRank(self.trumpRank)
+        self.rule.setTrumpSuit(self.trumpSuit)
         
-        while not self.declarer.getHand().empty():
+        while not self.declarer.handIsEmpty():
         # iteration
-            lastWnCds = lastWn.pickCards()
-            while not self.rule.isLeadingAllowed(lastWnCds):
-                
-                lastWnCds = lastWn.pickCards()
+            lastWnCds = lastWn.declareToPlayCards()
+            while not self.rule.isLeadingAllowed(lastWnCds):                
+                lastWnCds = lastWn.declareToPlayCards()
             otherPlayerHand = [lastWn.getNext().getHand(),lastWn.getNext().getNext().getHand(),lastWn.getNext().getNext().getNext().getHand()]
-            lastWnCds = self.rule.checkLeadingCombo(lastWnCds, otherPlayerHand) #not implemented yet
+            lastWnCds = self.rule.checkLeadingCombo(lastWnCds, otherPlayerHand) 
             lastWnCdSet = self.rule.getCardSet(lastWnCds)
-            tmpScore = self.rule.getCardSetScore() #not implemented yet
+            tmpScore = self.rule.getCardSetScore() 
             
             
             # player 1
             p1 = lastWn.getNext()
-            p1Cds = p1.pickCards([lastWnCds])
-            while not self.rule.isFollowingAllowed(p1Cds): #not implemented yet
-                p1Cds = p1.pickCards([lastWnCds])
+            p1Cds = p1.declareToPlayCards([lastWnCds])
+            while not self.rule.isFollowingAllowed(p1Cds): 
+                p1Cds = p1.declareToPlayCards([lastWnCds])
             p1CdSet = self.rule.getCardSet(p1Cds)
             tmpScore += self.rule.getCardListScore()    
             if self.rule.compareCards(lastWnCdSet, p1CdSet):
@@ -100,9 +99,9 @@ class game(object):
             
             # player 2
             p2 = p1.getNext()
-            p2Cds = p2.pickCards([lastWnCds, p1Cds])
+            p2Cds = p2.declareToPlayCards([lastWnCds, p1Cds])
             while not self.rule.isFollowingAllowed(p2Cds): 
-                p2Cds = p2.pickCards([lastWnCds, p1Cds])
+                p2Cds = p2.declareToPlayCards([lastWnCds, p1Cds])
             p2CdSet = self.rule.getCardSet(p2Cds)
             tmpScore += self.rule.getCardSetScore(p2Cds)
             if not self.rule.compareCards(currWnCdSet, p2CdSet):
@@ -111,9 +110,9 @@ class game(object):
                 
             # player 3
             p3 = p2.getNext()
-            p3Cds = p3.pickCards([lastWnCds, p1Cds, p2Cds])
+            p3Cds = p3.declareToPlayCards([lastWnCds, p1Cds, p2Cds])
             while not self.rule.isFollowingAllowed(p3Cds): 
-                p3Cds = p3.pickCards([lastWnCds, p1Cds, p2Cds])
+                p3Cds = p3.declareToPlayCards([lastWnCds, p1Cds, p2Cds])
             p3CdSet = self.rule.getCardSet(p3Cds)
             tmpScore += self.rule.getCardSetScore(p3Cds)
             if not self.rule.compareCards(currWnCdSet, p3CdSet):
@@ -123,6 +122,7 @@ class game(object):
             if currWn == self.declarer or currWn == self.declarer.getNext().getNext():
                 self.currScore += tmpScore
             
+            # reset the winner and begin next round
             lastWn = currWn
         
         if currWn == self.declarer or currWn == self.declarer.getNext().getNext():

@@ -24,6 +24,16 @@ class Rule(object):
         return self.trumpSuit
     
     '''
+    Bellow are the rules for the object card or a list of the object card:
+    isTrump()
+    getCardScore()
+    getCardListScore()
+    compareCards(cd1, cd2)
+    rearrange(cdlist)
+    getCardSet()
+    '''
+    
+    '''
     card->bool
     return 1 if the card is trump
     return 0 if not
@@ -223,30 +233,35 @@ class Rule(object):
                 return True
         return False
                 
+    
     '''
-    what players can do or not are defined here
+    bellow are the rules during the process of dealing
     '''
+    
+    
+    
     
     # not implemented yet
     def canSetTrumpSuit(self, p):
         pass                
     
     
-    
     '''
-    what the first player can do during a round of playing
+    bellow are the rules during the process of playding
+    isLeadingAllowed()    if the leading player can play the cards
+    *need test* checkLeadingCombo() check if the player need to play smaller cards due to failed combo
+    *need test for multi tracts* isFollowingAllowed() check what the follower played is allowed
+        *assistant methods* cardListContainTract
+        *assistant methods* searchTractTrump
+        *assistant methods* searchTractSuit
     '''
+
     def isLeadingAllowed(self, cdList):               
         '''
         whether the player is allowed to play the cards
         '''
         return not self.isDrop(cdList)
-    
-
-    
-    
-    
-    
+       
     
     def checkLeadingCombo(self, leadingCards, otherPlayerHand):
         
@@ -302,28 +317,13 @@ class Rule(object):
             if not cdset.getSingleCardList().empty():
                 return cdset.getSingleCardList()[0]
             else:
-                return cdset.getTractList()[0]   
-                       
-    '''
-    to here it is made sure that no other player has larger tractor than leading player
-    '''    
+                return cdset.getTractList()[0]                        
+            '''
+            to here it is made sure that no other player has larger tractor than leading player
+            '''    
 
-    '''
-    isFollowingAllowed: 
-    First get the suit that the leading played: trump or a non-trump suit
-    Then get the according suit CSFH from the followers hand 
-    If the follower is dropping: 
-        check the number of cards in  and the number of cards in CSL:
-            if ncCSFH > nCSL:    output False
-            else: continue checking:
-                for each tractList tL in CSL:
-                    if there are not tractList of the same amount in CSFP:
-                    find if there are any in CSFH - CSFP:
-                        if yes: return False
-                        continuing searching
-            return True
-                    
-    '''
+    
+    
     # well tested
     def cardListContainTract(self,cdList,tLength):
         if tLength == 0 and len(cdList)>0:
@@ -336,93 +336,57 @@ class Rule(object):
         return False   
         
     
-    '''
-    def isFollowingAllowed(self, leadingCds, followingCds, followingHand):              
-        tmpCdList = []
-        if self.isTrump(leadingCds[0]):
-            for cd in followingHand:
-                if cd not in followingCds and self.isTrump(cd):
-                    tmpCdList.append(cd)    # gather all the cards of the same suit that are still in the player's hand
-        else:
-            tmpSuit = leadingCds[0].getSuit()
-            for cd in followingHand:
-                if cd not in followingCds and cd.getSuit() == tmpSuit:
-                    tmpCdList.append(cd)
-        # tmpCdList: the cards with the same suit in the follower's hand while the follower did not pick to play them in this round
-                
-        leadingCdSet = self.getCardSet(leadingCds)
-        leadingTractList = leadingCdSet.getTractList()
-        for t in leadingTractList[::-1]:
-            if self.cardListContainTract(tmpCdList, t.getLength()):
-                return False
-        leadingSingleCardList = leadingCdSet.getSingleCardList()
-        if  len(leadingSingleCardList)!=0:
-            if self.cardListContainTract(tmpCdList, 0):
-                return False
-        return True
-    '''
     
-    '''
-    def isFollowingAllowed(self, leadingCds, followingCds, followingHand):
-        tmpCdList = []
-        if self.isTrump(leadingCds[0]):
-            for cd in followingHand:
-                if cd not in followingCds and self.isTrump(cd):
-                    tmpCdList.append(cd)    # gather all the cards of the same suit that are still in the player's hand
-        else:
-            tmpSuit = leadingCds[0].getSuit()
-            for cd in followingHand:
-                if cd not in followingCds and cd.getSuit() == tmpSuit:
-                    tmpCdList.append(cd)
-        followingCdSet = self.getCardSet(followingCds)
-        followingCdSetType = followingCdSet.getType()
-        leadingCdSet = self.getCardSet(leadingCds)
-        leadingCdSetType = leadingCdSet.getType()
-        followingHandCdSet = self.getCardSet(followingHand)
-        followingHandCdSetType = followingHandCdSet.getType()
-        while len(followingCdSetType)>1 and len(leadingCdSetType)>1:
-            if leadingCdSetType[-1] in followingCdSetType:
-                followingCdSetType.remove(leadingCdSetType[-1])
-                followingHandCdSetType.remove(leadingCdSetType[-1]) 
-                # The player played the same type: thats ok, remove all of them
-            else:
-                while leadi
-    '''
     
     '''
     if leading is a tract: well tested
-    if leading is a singleCards:
+    if leading is a singleCards: well tested
+    if leading is multi tracts: not tested yet
+    if leading contains both singleCards and multi tracts: not tested yet
     '''
     
     
     def isFollowingAllowed(self, leadingCds, followingCds, followingHand):
-        # leading is single cards
-        tmpFollowingHand = []
-        tmpFollowingCds = []
-        if self.isTrump(leadingCds[0]):
-            for cd in followingCds:
-                if self.isTrump(cd):
-                    tmpFollowingCds.append(cd)
-            for cd in followingHand:
-                if self.isTrump(cd):
-                    tmpFollowingHand.append(cd)
-        else:
-            suit = leadingCds[0].getSuit()
-            for cd in followingCds:
-                if not self.isTrump(cd) and cd.getSuit()==suit:
-                    tmpFollowingCds.append(cd)
-            for cd in followingHand:
-                if not self.isTrump(cd) and cd.getSuit()==suit:
-                    tmpFollowingHand.append(cd)
-        return len(tmpFollowingCds) == min(len(tmpFollowingHand), len(leadingCds)) 
-        '''
-        # leadingCds is a tract
-        if self.isTrump(leadingCds[0]):
-            return self.searchTractTrump(followingHand[:], followingCds[:], len(leadingCds)/2)
-        else:
-            suit = leadingCds[0].getSuit()
-            return self.searchTractTrump(followingHand[:], followingCds[:], suit, len(leadingCds)/2)
-        '''
+        leadingCardSet = self.getCardSet(leadingCds)
+        lenSingleCards = len(leadingCardSet.getSingleCardList())
+        lenTract = len(leadingCardSet.getTractList())
+        copyFollowingCards = followingCds[:]
+        copyFollowingHand = followingHand[:]
+        flag = None #flag == 1 legal, 0 illegal
+        if lenTract!=0:
+            # leading contains tracts
+            for tract in leadingCardSet.getTractList():
+                if self.isTrump(leadingCds[0]):
+                    flag = self.searchTractTrump(copyFollowingHand, copyFollowingCards, tract.getLength())
+                else:
+                    suit = leadingCds[0].getSuit()
+                    flag =  self.searchTractTrump(copyFollowingHand, copyFollowingCards, suit, tract.getLength())
+        
+        if flag == False:
+            return flag
+        
+        elif lenSingleCards != 0:
+            # leading contains single cards
+            tmpFollowingHand = []
+            tmpFollowingCds = []
+            if self.isTrump(leadingCds[0]):
+                for cd in copyFollowingCards:
+                    if self.isTrump(cd):
+                        tmpFollowingCds.append(cd)
+                for cd in copyFollowingHand:
+                    if self.isTrump(cd):
+                        tmpFollowingHand.append(cd)
+            else:
+                suit = leadingCds[0].getSuit()
+                for cd in copyFollowingCards:
+                    if not self.isTrump(cd) and cd.getSuit()==suit:
+                        tmpFollowingCds.append(cd)
+                for cd in copyFollowingHand:
+                    if not self.isTrump(cd) and cd.getSuit()==suit:
+                        tmpFollowingHand.append(cd)
+            return len(tmpFollowingCds) == min(len(tmpFollowingHand), len(leadingCds))   
+    
+    
     def searchTractTrump(self, hand, ctp, delta):
         #calculate lm, the length of the tract with the largest length in follower's hand
         tmpHand = []
@@ -508,9 +472,6 @@ class Rule(object):
         return self.searchTract(self, hand, ctp, delta)
     
     
-    '''
-    if leading card is a singlecard
-    '''
     
         
     

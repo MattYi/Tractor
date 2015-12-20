@@ -8,18 +8,20 @@ import player
 import deck
 import rule
 import random
-import interface
+import brainDOS
+#import interface
 
-class game(object):
+class Game(object):
     '''
     constructor
     playerList, deck, rule, trumpRank, trumpSuit, currentScore, Declarer
     '''
     def __init__(self):
-        self.pe = player.Player()   #east player
-        self.pn = player.Player()   #north player
-        self.pw = player.Player()   #west player
-        self.ps = player.Player()   #south player
+        brain1 = brainDOS.BrainDOS()
+        self.pe = player.Player(brain1,0,'MANANXUN')   #east player
+        self.pn = player.Player(brain1,1,'WEIWENHUAN')   #north player
+        self.pw = player.Player(brain1,2,'ZHUYIZHE')   #west player
+        self.ps = player.Player(brain1,3,'TANGSHENQI')   #south player
         self.pe.setNext(self.pn)
         self.pn.setNext(self.pw)
         self.pw.setNext(self.ps)
@@ -31,6 +33,10 @@ class game(object):
         self.trumpSuit = 'NA'
         self.currScore = 0
         self.declarer = None
+
+
+        self.rule.setTrumpRank(self.trumpRank)
+        #print self.rule.isTrumpAllowed('a')
         
         
     ''' 
@@ -52,8 +58,9 @@ class game(object):
     '''
     
     def on(self):
-        self.start()
+        #self.start()
         self.deal()
+        self.play()
         self.end()
     
     '''
@@ -61,7 +68,69 @@ class game(object):
     '''
             
     def deal(self):
-        pass
+        """
+        DESCRIPTION
+            Draw cards
+        """
+        players = [self.pe,self.pn,self.pw,self.ps]
+        for i in xrange(25):
+            for player in players:
+                player.drawCard(self.deck.popCard())
+                print "Length of player "+str(player)+"'s current hands:" + str(len(player.hand))
+                if self.rule.canDeclareTrump(player.getHand()):
+                    cdlist = player.declareTrump(self.declarer,self.trumpRank,self.trumpSuit)
+                    while cdlist != False and (not self.rule.isTrumpAllowed(cdlist)):
+                        cdlist = player.declareTrump(self.declarer,self.trumpRank,self.trumpSuit)
+                    
+                    if cdlist != False:
+                        self.trumpSuit = cdlist[0].getSuit() 
+                        self.declarer = player
+
+        self.deck.bottom = self.declarer.replaceBottom(self.deck.getBottom())
+        print "Cards in new bottom:"
+        for item in self.deck.bottom:
+            print item
+        print "Cards in each player's hand:"
+        for player in players:
+            print str(player)
+            for item in player.getHand():
+                print item
+        print "Cards in declarer's hand:"
+        for item in self.declarer.getHand():
+            print item
+        self.rule.setTrumpSuit(self.trumpSuit)
+            #self.pn.drawCard(self.deck.popCard())
+            #print "Length of player pn's current hands:" + str(len(self.pn.hand))
+            #if self.rule.canDeclareTrump(self.pn.getHand()):
+            #    cdlist = self.pn.declareTrump(self.declarer,self.trumpRank,self.trumpSuit)
+            #    while cdlist != False:
+            #        if self.rule.isTrumpAllowed(cdlist):
+            #            self.trumpSuit = cdlist[0].getSuit() 
+            #            self.declarer = self.pn
+            #        else:
+            #            cdlist = self.pn.declareTrump(self.declarer,self.trumpRank,self.trumpSuit)
+
+            #self.pw.drawCard(self.deck.popCard())
+            #print "Length of player pw's current hands:" + str(len(self.pw.hand))
+            #if self.rule.canDeclareTrump(self.pw.getHand()):
+            #    cdlist = self.pw.declareTrump(self.declarer,self.trumpRank,self.trumpSuit)
+            #    while cdlist != False:
+            #        if self.rule.isTrumpAllowed(cdlist):
+            #            self.trumpSuit = cdlist[0].getSuit() 
+            #            self.declarer = self.pw
+            #        else:
+            #            cdlist = self.pw.declareTrump(self.declarer,self.trumpRank,self.trumpSuit)
+
+            #self.ps.drawCard(self.deck.popCard())
+            #print "Length of player ps's current hands:" + str(len(self.ps.hand))
+            #if self.rule.canDeclareTrump(self.ps.getHand()):
+            #    cdlist = self.pw.declareTrump(self.declarer,self.trumpRank,self.trumpSuit)
+            #    while cdlist != False:
+            #        if self.rule.isTrumpAllowed(cdlist):
+            #            self.trumpSuit = cdlist[0].getSuit() 
+            #            self.declarer = self.ps
+            #        else:
+            #            cdlist = self.ps.declareTrump(self.declarer,self.trumpRank,self.trumpSuit)
             
             
 
@@ -71,7 +140,7 @@ class game(object):
         tmpScore = 0
         self.rule.setTrumpRank(self.trumpRank)
         self.rule.setTrumpSuit(self.trumpSuit)
-        
+
         while not self.declarer.handIsEmpty():
         # iteration
             lastWnCds = lastWn.declareToPlayCards()

@@ -80,7 +80,7 @@ class Player(object):
             raise TypeError("Try to append a object to Hands which is not a Card object")
             return False
     
-    def declareTrump(self,cardOnDesk):
+    def declareTrump(self,player,currentTrumpRank,currentTrumpSuit):
         """
         DESCRIPTION:
             Currently, this function will be called in Game object each time a player draw a card.
@@ -94,7 +94,8 @@ class Player(object):
             If do not want to declare trump, return False
         """
         #cds should be a list of one card or two cards (declare after someone has already done this)
-        cds = self.brain.declareTrump(self.hand,cardOnDesk)
+        #print self.brain.getType()
+        cds = self.brain.declareTrump(self.hand,player,currentTrumpRank,currentTrumpSuit)
         if cds == False:#Not declare
             return False
         else:#declare trump
@@ -189,6 +190,9 @@ class Player(object):
             newBottom.remove(g)
             newBottom.append(p)
         return newBottom
+
+    def getHand(self):
+        return self.hand[:]
 
 
 

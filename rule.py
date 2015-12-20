@@ -4,6 +4,7 @@ This class keeps the rules of tractor
 
 import sys
 import cardSet
+import card
 from __builtin__ import False
 
 class Rule(object):
@@ -470,6 +471,18 @@ class Rule(object):
         else:
             return False
         return self.searchTract(self, hand, ctp, delta)
+
+    def isTrumpAllowed(self,cdlist):
+        #todo
+        return True
+
+    def canDeclareTrump(self,hand):
+        #todo
+        cd = card.Card(0)
+        if cd == hand[-1]:
+            return True
+        else:
+            return False
     
     
     

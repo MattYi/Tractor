@@ -12,7 +12,7 @@ class Brain(object):
     def getName(self):
         return self.__name
 
-    def declareTrump(self,hand,cardOnDesk):
+    def declareTrump(self,hand,player,currentTrumpRank,currentTrumpSuit):
         """
         Description:
             INTERFACE, TO BE IMPLEMENTED BY ITS DERIVED CLASS.

@@ -27,13 +27,14 @@ class Player(object):
     # hand: it is a list of card object that this player is holding
         self.hand = []
         self.brain = brain
+        self.next = None
 
     
-    def setNext(self):
-        pass
+    def setNext(self, nextPlayer):
+        self.next = nextPlayer
     
     def getNext(self):
-        pass
+        return self.next
         
     def setName(self, n):
         self.name = n

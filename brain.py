@@ -3,10 +3,8 @@ class Brain(object):
         """
         data member:
             int id
-            list hand
             string name
-            Brain brain
-        This is a base virtual class to be inherited by other classes like DOSbrain, AI, UI
+        This is a base virtual class to be inherited by other classes like BrainDOS, AI, UI
         It is called by Player class
         """
         self.__name = n
